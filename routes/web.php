@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Index;
+use App\Http\Livewire\Enviar;
+use App\Http\Controllers\CarteraController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +24,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('dashboard');
 });
 
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera',[CarteraController::class, 'cartera']);
+Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/enviar',[CarteraController::class, 'enviar']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/enviar', Enviar::class);
