@@ -12,7 +12,22 @@
                 </div>
                 <div class="flex mt-5 text-center">
                     <div id="grafica" class="flex-1 box-border border-4" style=" width: 7%; height: 40em">
-
+                        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                        <script type="text/javascript">
+                        new TradingView.widget({
+                        "autosize": true,
+                        "symbol": "BTCEUR",
+                        "interval": "1H",
+                        "timezone": "Etc/UTC",
+                        "theme": "Dark",
+                        "style": "1",
+                        "locale": "es",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "allow_symbol_change": true,
+                        "hideideas": true
+                        });
+                        </script>
                     </div>
 
                     <div class="flex-1 box-border border-4">
