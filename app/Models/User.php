@@ -23,6 +23,17 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+
+    public function rangos()
+    {
+        return $this->hasMany(Rango::class);
+    }
+
+    public function carteras()
+    {
+        return $this->hasOne(Cartera::class, 'user_id');
+    }
+
     protected $fillable = [
         'nombre',
         'apellidos',

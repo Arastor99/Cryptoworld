@@ -29,12 +29,16 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        $usuario = User::create([
             'nombre' => $input['nombre'],
             'apellidos' => $input['apellidos'],
             'email' => $input['email'],
             'nickname' => $input['nickname'],
             'password' => Hash::make($input['password']),
         ]);
+
+        app('App\Http\Controllers\CarteraController')->crear_carteras($usuario);
+
+        return $usuario;
     }
 }
