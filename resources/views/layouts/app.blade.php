@@ -18,29 +18,30 @@
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
-        <x-jet-banner />
+    <body>
+        @livewireScripts()
+        <nav class="bg-slate-700 px-4 p-4">
+            <div class="flex items-center justify-between">
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <div class="flex items-center">
+                    <div>
+                        <img src="https://img.icons8.com/nolan/344/ethereum.png" style=" max-width:64px;
+                        max-height:64px;" />
                     </div>
-                </header>
-            @endif
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+                    <div class="pl-5">
+                        <a href="/comprar">Comprar crypto</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="/login">Iniciar Sesión</a>
+                    <a href="/register">Registrarse</a>
+                </div>
 
-        @stack('modals')
-
-        @livewireScripts
+            </div>
+            </div>
+            </div>
+        </nav>
+        <main> {{$slot}} </main>
     </body>
 </html>
