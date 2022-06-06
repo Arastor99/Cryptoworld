@@ -106,6 +106,32 @@ class CarteraController extends Controller
         return redirect('cartera/enviar');
 
     }
+    
+        public function visualizar(){
+
+        $cryptos = DB::table('carteras')
+        ->select('cryptos.abr','carteras.cantidad')
+        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
+        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
+        ->where('carteras.user_id','=',Auth::user()->id)
+        ->get();
+
+
+        $fiat = DB::table('fiats')
+        ->select('fiats.divisa','cartera_fiats.cantidad')
+        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
+        ->where('cartera_fiats.user_id','=', Auth::user()->id)
+        ->get();
+        $binance = new PreciosController();
+
+
+        return view('cartera',
+        [
+            'cryptos' => $cryptos,
+            'binance' => $binance,
+            'fiats' => $fiat
+        ]);
+    }
 
     public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
@@ -153,30 +179,6 @@ class CarteraController extends Controller
         ->update(['carteras.cantidad' => $total2]);
     }
 
-    public function visualizar(){
 
-        $cryptos = DB::table('carteras')
-        ->select('cryptos.abr','carteras.cantidad')
-        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
-        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
-        ->where('carteras.user_id','=',Auth::user()->id)
-        ->get();
-
-
-        $fiat = DB::table('fiats')
-        ->select('fiats.divisa','cartera_fiats.cantidad')
-        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
-        ->where('cartera_fiats.user_id','=', Auth::user()->id)
-        ->get();
-        $binance = new PreciosController();
-
-
-        return view('cartera',
-        [
-            'cryptos' => $cryptos,
-            'binance' => $binance,
-            'fiats' => $fiat
-        ]);
-    }
 
 }
