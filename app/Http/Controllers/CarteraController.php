@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\PreciosController;
+use App\Models\CarteraFiat;
+use App\Models\Fiat;
 
 class CarteraController extends Controller
 {
@@ -36,6 +38,15 @@ class CarteraController extends Controller
                 'direccion_id' => $direccion->id,
             ]);
         }
+        for ($i=0; $i < DB::table('fiats')->max('id'); $i++) {
+            CarteraFiat::create([
+                'user_id' => $usuario->id,
+                'fiat_id' => Fiat::find($i+1)->id,
+            ]);
+        }
+
+
+
     }
 
     public function enviar(Request $request){
@@ -88,7 +99,7 @@ class CarteraController extends Controller
 
     public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
-        //falta validaciones.
+        //falta validaciones
         //cambiar floats por decimal o numeric
         $crypto1 = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
         $crypto2 = Crypto::select('abr')->where('id', '=', $request->cryptoid2)->get();
@@ -130,6 +141,10 @@ class CarteraController extends Controller
         ->where('carteras.user_id','=', Auth::user()->id)
         ->where('direcciones.crypto_id', '=', $request->cryptoid2)
         ->update(['carteras.cantidad' => $total2]);
+    }
+
+    public function visualizar(){
+        return view('cartera');
     }
 
 }

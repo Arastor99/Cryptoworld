@@ -31,7 +31,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="/usuario/{{ $dato->id }}/edit"
+                                <a href={{url('/usuarios/'.$dato->id.'/edit')}}
                                     class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Editar</a>
                             </td>
                             <td class="px-6 py-4">
