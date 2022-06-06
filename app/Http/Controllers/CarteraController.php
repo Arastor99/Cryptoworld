@@ -267,6 +267,9 @@ class CarteraController extends Controller
             'cryptos' => Crypto::all()
         ]);
     }
+    public function retirar(){
+        return view('retirar');
+    }
 
     public function checkout(Request $request){
 
@@ -284,9 +287,7 @@ class CarteraController extends Controller
 
     }
 
-    public function retirar(){
-        return view('retirar');
-    }
+    
 
     public function retirada(Request $request){
         return view('retirada',[
