@@ -84,7 +84,7 @@
 								Comprar
 							</a>
 							<a href="#" class="text-gray-400 hover:text-gray-100  mx-2">
-								Vender
+								Retirar
 							</a>
 						</td>
 					</tr>
