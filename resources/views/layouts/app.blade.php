@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
@@ -33,11 +33,23 @@
                         <a href="/comprar">Comprar crypto</a>
                     </div>
                 </div>
-                <div>
-                    <a href="/login">Iniciar Sesión</a>
-                    <a href="/register">Registrarse</a>
-                </div>
-
+                @if(!Auth::check())
+                    <div>
+                        <a href="/login">Iniciar Sesión</a>
+                        <a href="/register">Registrarse</a>
+                    </div>
+                @else
+                    <div>
+                        <a href="/cartera">Cartera</a>
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">*Foto perfil*</button>
+                            <div id="myDropdown" class="dropdown-content">
+                              <a href="#">Perfil</a>
+                              <a href="#">Cerrar sesión</a>
+                            </div>
+                          </div>
+                    </div>
+                    @endif
             </div>
             </div>
             </div>
