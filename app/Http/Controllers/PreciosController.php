@@ -11,7 +11,6 @@ class PreciosController extends Controller
 
     protected $api_url;   // url base de la api
 
-
     public function __construct($api_url = null)
     {
         $this->api_url = (!empty($api_url)) ? $api_url : config('binance-api.urls.api');
