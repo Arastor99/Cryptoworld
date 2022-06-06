@@ -23,6 +23,7 @@ class Recibir extends Component
     }
     public function updatedprueba($prueba){
        $this->prueba = Direccion::where('user_id', Auth::user()->id)
-       ->where('crypto_id', $prueba)->get();
+       ->where('crypto_id', $prueba)
+       ->get();
     }
 }
