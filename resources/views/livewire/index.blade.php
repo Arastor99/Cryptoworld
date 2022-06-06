@@ -1,5 +1,7 @@
 <div>
     <div>
+        <script src="https://www.cryptohopper.com/widgets/js/script"></script>
+        <div class="cryptohopper-web-widget" data-id="2" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR" data-ticker_design="2"></div>
         <body class="bg-slate-800">
             <div class="container mx-auto">
                 <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="margin-right: 10%; margin-left: 10%; margin-top: 2%; background-image: url(https://ethereumnews.io/wp-content/uploads/2020/03/Ethereum-03-905x613.jpg)">
@@ -31,10 +33,9 @@
                     </div>
 
                     <div class="flex-1 box-border border-4">
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Bitcoin:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Ethereum:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Cardano:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio BNB:  €</div>
+                        <div class="cryptohopper-web-widget" data-id="4" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

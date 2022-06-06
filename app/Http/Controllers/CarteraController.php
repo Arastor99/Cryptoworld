@@ -14,6 +14,16 @@ use App\Models\Fiat;
 
 class CarteraController extends Controller
 {
+
+
+    public function index(){
+        $binance = new PreciosController();
+
+        return view('livewire.index',
+        [
+            'binance' => $binance
+        ]);
+    }
     public function crear_carteras($usuario){
 
         $hash = array();
@@ -144,7 +154,29 @@ class CarteraController extends Controller
     }
 
     public function visualizar(){
-        return view('cartera');
+
+        $cryptos = DB::table('carteras')
+        ->select('cryptos.abr','carteras.cantidad')
+        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
+        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
+        ->where('carteras.user_id','=',Auth::user()->id)
+        ->get();
+
+
+        $fiat = DB::table('fiats')
+        ->select('fiats.divisa','cartera_fiats.cantidad')
+        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
+        ->where('cartera_fiats.user_id','=', Auth::user()->id)
+        ->get();
+        $binance = new PreciosController();
+
+
+        return view('cartera',
+        [
+            'cryptos' => $cryptos,
+            'binance' => $binance,
+            'fiats' => $fiat
+        ]);
     }
 
 }
