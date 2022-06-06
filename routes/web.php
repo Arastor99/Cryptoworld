@@ -4,7 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Index;
 use App\Http\Livewire\Enviar;
 use App\Http\Livewire\Recibir;
+use App\Http\Livewire\Vender;
+use App\Http\Livewire\Convertir;
 use App\Http\Controllers\CarteraController;
+use App\Http\Controllers\ImagenController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\StripeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +24,6 @@ use App\Http\Controllers\CarteraController;
 
 
 Route::get('/', Index::class);
-
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -26,7 +31,24 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 });
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/cartera',[CarteraController::class, 'cartera']);
+Route::resource('usuarios', UsuarioController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera',[CarteraController::class, 'visualizar']);
 Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/enviar',[CarteraController::class, 'enviar']);
-Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/recibir', Recibir::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/enviar', Enviar::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/recibir', Recibir::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/convertir', Convertir::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/vender', Vender::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/convertir', [CarteraController::class,'convertir']);
+Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/vender', [CarteraController::class,'vender']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/mercado',[CarteraController::class, 'mercado']);
+
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
+Route::middleware(['auth:sanctum', 'verified'])->get('comprar', [CarteraController::class, 'comprar']);
+Route::middleware(['auth:sanctum', 'verified'])->post('checkout', [CarteraController::class, 'checkout']);
+
+Route::post('stripe1', [StripeController::class, 'stripePost1'])->name('stripe.post1');
+Route::get('retirar', [CarteraController::class, 'retirar']);
+Route::middleware(['auth:sanctum', 'verified'])->post('retirada', [CarteraController::class, 'retirada']);
+
+
+

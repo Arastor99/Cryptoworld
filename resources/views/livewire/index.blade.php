@@ -1,8 +1,11 @@
 <div>
     <div>
-        <body class="bg-slate-800">
+        <script src="https://www.cryptohopper.com/widgets/js/script"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+        <div class="cryptohopper-web-widget" data-id="2" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR" data-ticker_design="2"></div>
+        <body style="background-color: #121212">
             <div class="container mx-auto">
-                <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="margin-right: 10%; margin-left: 10%; margin-top: 2%; background-image: url(https://ethereumnews.io/wp-content/uploads/2020/03/Ethereum-03-905x613.jpg)">
+                <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="margin-right: 10%; margin-left: 10%; margin-top: 2%; background-image: url(https://img.freepik.com/free-vector/detailed-gold-coin-bitcoin-btc-token-with-pcb-tracks-black-white-dark-background-digital-gold-techno-style-website-banner-vector-illustration_337410-1071.jpg)">
                     <div class="md:w-1/2">
                     <p class="font-bold text-sm uppercase">Compra cryptomonedas</p>
                     <p class="text-3xl font-bold">Genera ganancias</p>
@@ -11,7 +14,7 @@
                     </div>
                 </div>
                 <div class="flex mt-5 text-center">
-                    <div id="grafica" class="flex-1 box-border border-4" style=" width: 7%; height: 40em">
+                    <div id="grafica" class="flex-1  " style=" width: 7%; height: 50em">
                         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                         <script type="text/javascript">
                         new TradingView.widget({
@@ -30,46 +33,44 @@
                         </script>
                     </div>
 
-                    <div class="flex-1 box-border border-4">
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Bitcoin:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Ethereum:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio Cardano:  €</div>
-                        <div class="bg-orange-500 p-4 m-2 mb-5">Precio BNB:  €</div>
+                    <div class="flex-1 ">
+                        <div class="cryptohopper-web-widget" data-id="4" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </body>
-        <footer class="footer bg-slate-900 relative pt-1 border-b-2 border-blue-700">
+        <footer class="footer relative pt-1 " style="background-color:#202124">
             <div class="container mx-auto px-6">
 
                 <div class="sm:flex sm:mt-8">
                     <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
                         <div class="flex flex-col">
-                            <span class="font-bold text-gray-700 uppercase mb-2">Acerca de nosotros</span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
+                            <span class="font-bold text-white uppercase mb-2">Acerca de nosotros</span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Acerca de Cryptoworld</a></span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Blog</a></span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Declaración de divulgación de riesgos</a></span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">Información</span>
-                            <span class="my-2"><a href="#" class="text-blue-700 text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700 text-md hover:text-blue-500">link 1</a></span>
+                            <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Contactanos</span>
+                            <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"><i class="fa-solid fa-envelope"></i> soporte@cryptoworld.com</a></span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-solid fa-location-dot"></i> C\ Alegria 8, Zaragoza</a></span>
+                            <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"></a><i class="fa-solid fa-phone"></i> +34 678529173</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="font-bold text-gray-700 uppercase mt-4 md:mt-0 mb-2">Redes sociales</span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
-                            <span class="my-2"><a href="#" class="text-blue-700  text-md hover:text-blue-500">link 1</a></span>
+                            <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Redes sociales</span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-instagram"></i> Instagram</a></span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-facebook"></i> Facebook</a></span>
+                            <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-twitter"></i> Twitter</a></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container mx-auto px-6">
-                <div class="mt-16 border-t-2 border-gray-300 flex flex-col items-center">
+                <div class="mt-16 flex flex-col items-center">
                     <div class="sm:w-2/3 text-center py-6">
                         <p class="text-sm text-blue-700 font-bold mb-2">
-                            © 2021 by Arastor
                         </p>
                     </div>
                 </div>

@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\PreciosController;
 use Livewire\Component;
 
 class Index extends Component
 {
     public function render()
     {
-        return view('livewire.index');
+        $binance = new PreciosController();
+        return view('livewire.index',
+        [
+            'binance' => $binance
+        ]);
     }
 }

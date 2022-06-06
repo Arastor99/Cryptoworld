@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCryptosTable extends Migration
@@ -15,8 +16,30 @@ class CreateCryptosTable extends Migration
     {
         Schema::create('cryptos', function (Blueprint $table) {
             $table->id();
+            $table->string('abr');
             $table->string('nombre');
         });
+
+        DB::table('cryptos')->insert(
+            array(
+                'abr' => 'BTC',
+                'nombre' => 'bitcoin',
+            ));
+        DB::table('cryptos')->insert(
+            array(
+                'abr' => 'ETH',
+                'nombre' => 'ethereum',
+            ));
+        DB::table('cryptos')->insert(
+            array(
+                'abr' => 'ADA',
+                'nombre' => 'cardano',
+            ));
+        DB::table('cryptos')->insert(
+            array(
+                'abr' => 'BNB',
+                'nombre' => 'binancecoin',
+            ));
     }
 
     /**
