@@ -8,6 +8,7 @@ use App\Models\Crypto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\PreciosController;
 
 class CarteraController extends Controller
 {
@@ -83,6 +84,52 @@ class CarteraController extends Controller
 
         return redirect('cartera/enviar');
 
+    }
+
+    public function convertir(Request $request){
+        //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
+        //falta validaciones
+        //cambiar floats por decimal o numeric
+        $crypto1 = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
+        $crypto2 = Crypto::select('abr')->where('id', '=', $request->cryptoid2)->get();
+        $binance = new PreciosController();
+        $precio1 = $binance->precio($crypto1[0]->abr . 'EUR');
+        $precio2 = $binance->precio($crypto2[0]->abr . 'EUR');
+
+        //$elimina es la cantidad que hay que retirarle al usuario de la crypto1
+        //$recibe es la cantidad que hay que añadirle al usuario de la crypto2
+        $elimina = $request->cantidad;
+        $recibe = ((float) $elimina * (float) $precio1['price']) / (float) $precio2['price'];
+
+        $tiene = Cartera::select('carteras.cantidad')
+        ->join('direcciones','carteras.direccion_id','=','direcciones.id')
+        ->where('carteras.user_id','=', Auth::user()->id)
+        ->where('direcciones.crypto_id', '=', $request->cryptoid1)->get();
+
+        $total = (float) $tiene[0]->cantidad - (float) $elimina;
+
+        Cartera::select('carteras.cantidad')
+        ->join('direcciones','carteras.direccion_id','=','direcciones.id')
+        ->where('carteras.user_id','=', Auth::user()->id)
+        ->where('direcciones.crypto_id', '=', $request->cryptoid1)
+        ->update(['carteras.cantidad' => $total]);
+
+
+
+        $tiene2 = Cartera::select('carteras.cantidad')
+        ->join('direcciones','carteras.direccion_id','=','direcciones.id')
+        ->where('carteras.user_id','=', Auth::user()->id)
+        ->where('direcciones.crypto_id', '=', $request->cryptoid2)->get();
+
+        $total2 = (float) $tiene2[0]->cantidad + (float) $recibe;
+
+
+
+        Cartera::select('carteras.cantidad')
+        ->join('direcciones','carteras.direccion_id','=','direcciones.id')
+        ->where('carteras.user_id','=', Auth::user()->id)
+        ->where('direcciones.crypto_id', '=', $request->cryptoid2)
+        ->update(['carteras.cantidad' => $total2]);
     }
 
 }

@@ -6,13 +6,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "codenix-sv/coingecko-api": "^1.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "jaggedsoft/php-binance-api": "@dev",
         "laravel/framework": "^8.75",
         "laravel/jetstream": "^2.7",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.5"
+        "livewire/livewire": "^2.5",
+        "techtailor/laravel-binance-api": "^0.1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
