@@ -1,5 +1,5 @@
 <div>
-    <label for="">¿Que crypto quieres enviar?</label>
+    <label for="">¿Que crypto quieres recibir?</label>
 
 <select wire:model="prueba">
     <option>Seleccione una cryptomoneda</option>

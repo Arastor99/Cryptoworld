@@ -15,7 +15,7 @@
                 <option value="{{$fiat->id}}">{{$fiat->divisa}}</option>
             @endforeach
     </select>
-    @if(!is_null ($crypto1) && !is_null ($fiat1))
+    @if(!is_null ($crypto) && !is_null ($fiat))
     <form action="/cartera/vender" method="POST">
         <div> Cantidad disponible:</div>
         @csrf
@@ -25,7 +25,7 @@
         @if(!is_null ($recibir))
         <label  for="recibir"> Recibiras {{$recibir}} de </label>
         <br>
-        <input type="hidden" name="cryptoid" id="cryptoid" value={{$crypto}}>
+        <input type="hidden" name="cryptoid" id="cryptoid" value={{$crypto1}}>
         <input type="hidden" name="precio" id="precio" value={{$precio['price']}}>
 
 

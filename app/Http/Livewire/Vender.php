@@ -28,12 +28,12 @@ class Vender extends Component
         ]);
     }
 
-    public function updatedcrypto($crypto_id){
+    public function updatedcrypto1($crypto_id){
         $this->nombre1 = Crypto::select('abr')->where('id','=', $crypto_id)->get();
         $binance = new PreciosController();
         $this->precio = $binance->precio($this->nombre1[0]->abr . 'EUR');
     }
-    public function updatedfiat($crypto_id, $nombre2){
+    public function updatedfiat1($crypto_id){
         $this->nombre2 = Crypto::select('abr')->where('id','=', $crypto_id)->get();
     }
 

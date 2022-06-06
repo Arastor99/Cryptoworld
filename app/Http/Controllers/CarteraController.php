@@ -106,32 +106,6 @@ class CarteraController extends Controller
         return redirect('cartera/enviar');
 
     }
-    
-        public function visualizar(){
-
-        $cryptos = DB::table('carteras')
-        ->select('cryptos.abr','carteras.cantidad')
-        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
-        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
-        ->where('carteras.user_id','=',Auth::user()->id)
-        ->get();
-
-
-        $fiat = DB::table('fiats')
-        ->select('fiats.divisa','cartera_fiats.cantidad')
-        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
-        ->where('cartera_fiats.user_id','=', Auth::user()->id)
-        ->get();
-        $binance = new PreciosController();
-
-
-        return view('cartera',
-        [
-            'cryptos' => $cryptos,
-            'binance' => $binance,
-            'fiats' => $fiat
-        ]);
-    }
 
     public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
@@ -179,6 +153,74 @@ class CarteraController extends Controller
         ->update(['carteras.cantidad' => $total2]);
     }
 
+    public function visualizar(){
 
+        $cryptos = DB::table('carteras')
+        ->select('cryptos.abr','carteras.cantidad')
+        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
+        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
+        ->where('carteras.user_id','=',Auth::user()->id)
+        ->get();
+
+
+        $fiat = DB::table('fiats')
+        ->select('fiats.divisa','cartera_fiats.cantidad')
+        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
+        ->where('cartera_fiats.user_id','=', Auth::user()->id)
+        ->get();
+        $binance = new PreciosController();
+
+
+        return view('cartera',
+        [
+            'cryptos' => $cryptos,
+            'binance' => $binance,
+            'fiats' => $fiat
+        ]);
+    }
+
+    public function vender(Request $request){
+        //falta hacer comprobaciones antes de realizar cualquier operacion.
+        $binance = new PreciosController();
+
+        $abr = Crypto::select('abr')
+        ->where('id','=', $request->cryptoid)
+        ->first();
+
+        $precio = $binance->precio($abr->abr . 'EUR');
+        $total = (float) $request->cantidad * (float) $precio['price'];
+
+        $cantidadAntigua = Cartera::select('cantidad')
+                        ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
+                        ->join('cryptos', 'cryptos.id', '=', 'direcciones.crypto_id')
+                        ->where('carteras.user_id', '=', Auth::user()->id)
+                        ->where('cryptos.abr', '=', $abr->abr)
+                        ->first();
+
+        $cantidadNueva = (float) $cantidadAntigua->cantidad - (float) $request->cantidad;
+
+        Cartera::select('cantidad')
+        ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
+        ->join('cryptos', 'cryptos.id', '=', 'direcciones.crypto_id')
+        ->where('carteras.user_id', '=', Auth::user()->id)
+        ->where('cryptos.abr', '=', $abr->abr)
+        ->update(['carteras.cantidad' => $cantidadNueva]);
+
+
+
+        $euros = CarteraFiat::select('cantidad')
+                ->join('fiats','cartera_fiats.fiat_id', '=', 'fiats.id')
+                ->where('cartera_fiats.user_id', '=', Auth::user()->id)
+                ->first();
+
+        $eurosNuevos = (float) $euros->cantidad + (float) $total;
+
+        CarteraFiat::select('cantidad')
+                ->join('fiats','cartera_fiats.fiat_id', '=', 'fiats.id')
+                ->where('cartera_fiats.user_id', '=', Auth::user()->id)
+                ->update(['cartera_fiats.cantidad' => $eurosNuevos]);
+
+
+    }
 
 }
