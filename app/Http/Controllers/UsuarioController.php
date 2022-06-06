@@ -24,7 +24,6 @@ class UsuarioController extends Controller
         return view('usuario.create');
     }
 
-
     public function store(Request $request){
         $datosUsuario = request()->except('_token');
         User::insert($datosUsuario);
