@@ -88,7 +88,7 @@ class CarteraController extends Controller
 
     public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
-        //falta validaciones
+        //falta validaciones.
         //cambiar floats por decimal o numeric
         $crypto1 = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
         $crypto2 = Crypto::select('abr')->where('id', '=', $request->cryptoid2)->get();
