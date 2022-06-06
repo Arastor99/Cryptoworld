@@ -2,7 +2,7 @@
     <div>
         <script src="https://www.cryptohopper.com/widgets/js/script"></script>
         <div class="cryptohopper-web-widget" data-id="2" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR" data-ticker_design="2"></div>
-        <body class="bg-slate-800">
+        <body style="background-color: #202124">
             <div class="container mx-auto">
                 <div class="bg-cover bg-center  h-auto text-white py-24 px-10 object-fill" style="margin-right: 10%; margin-left: 10%; margin-top: 2%; background-image: url(https://ethereumnews.io/wp-content/uploads/2020/03/Ethereum-03-905x613.jpg)">
                     <div class="md:w-1/2">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="flex mt-5 text-center">
-                    <div id="grafica" class="flex-1 box-border border-4" style=" width: 7%; height: 40em">
+                    <div id="grafica" class="flex-1 box-border border-4" style=" width: 7%; height: 50em">
                         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                         <script type="text/javascript">
                         new TradingView.widget({

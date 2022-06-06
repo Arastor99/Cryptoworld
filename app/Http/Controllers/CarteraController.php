@@ -106,8 +106,54 @@ class CarteraController extends Controller
         return redirect('cartera/enviar');
 
     }
+
     
-        public function visualizar(){
+    
+     public function vender(Request $request){
+        //falta hacer comprobaciones antes de realizar cualquier operacion.
+        $binance = new PreciosController();
+
+        $abr = Crypto::select('abr')
+        ->where('id','=', $request->cryptoid)
+        ->first();
+
+        $precio = $binance->precio($abr->abr . 'EUR');
+        $total = (float) $request->cantidad * (float) $precio['price'];
+
+        $cantidadAntigua = Cartera::select('cantidad')
+                        ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
+                        ->join('cryptos', 'cryptos.id', '=', 'direcciones.crypto_id')
+                        ->where('carteras.user_id', '=', Auth::user()->id)
+                        ->where('cryptos.abr', '=', $abr->abr)
+                        ->first();
+
+        $cantidadNueva = (float) $cantidadAntigua->cantidad - (float) $request->cantidad;
+
+        Cartera::select('cantidad')
+        ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
+        ->join('cryptos', 'cryptos.id', '=', 'direcciones.crypto_id')
+        ->where('carteras.user_id', '=', Auth::user()->id)
+        ->where('cryptos.abr', '=', $abr->abr)
+        ->update(['carteras.cantidad' => $cantidadNueva]);
+
+
+
+        $euros = CarteraFiat::select('cantidad')
+                ->join('fiats','cartera_fiats.fiat_id', '=', 'fiats.id')
+                ->where('cartera_fiats.user_id', '=', Auth::user()->id)
+                ->first();
+
+        $eurosNuevos = (float) $euros->cantidad + (float) $total;
+
+        CarteraFiat::select('cantidad')
+                ->join('fiats','cartera_fiats.fiat_id', '=', 'fiats.id')
+                ->where('cartera_fiats.user_id', '=', Auth::user()->id)
+                ->update(['cartera_fiats.cantidad' => $eurosNuevos]);
+
+
+    }
+
+    public function visualizar(){
 
         $cryptos = DB::table('carteras')
         ->select('cryptos.abr','carteras.cantidad')
@@ -133,7 +179,7 @@ class CarteraController extends Controller
         ]);
     }
 
-    public function convertir(Request $request){
+   public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
         //falta validaciones
         //cambiar floats por decimal o numeric
@@ -178,7 +224,5 @@ class CarteraController extends Controller
         ->where('direcciones.crypto_id', '=', $request->cryptoid2)
         ->update(['carteras.cantidad' => $total2]);
     }
-
-
 
 }
