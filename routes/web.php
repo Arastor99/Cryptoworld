@@ -8,6 +8,7 @@ use App\Http\Livewire\Vender;
 use App\Http\Livewire\Convertir;
 use App\Http\Controllers\CarteraController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\StripeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/convertir', Conve
 Route::middleware(['auth:sanctum', 'verified'])->get('/cartera/vender', Vender::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/convertir', [CarteraController::class,'convertir']);
 Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/vender', [CarteraController::class,'vender']);
+Route::get('/checkout', [StripeController::class, 'stripe']);
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
