@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class Recibir extends Component
 {
-
     public $prueba;
     protected $rules = [
         'prueba' => 'required',
