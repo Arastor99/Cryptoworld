@@ -169,33 +169,6 @@ class CarteraController extends Controller
         ->where('direcciones.crypto_id', '=', $request->cryptoid2)
         ->update(['carteras.cantidad' => $total2]);
     }
-
-    public function visualizar(){
-
-        $cryptos = DB::table('carteras')
-        ->select('cryptos.abr','carteras.cantidad')
-        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
-        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
-        ->where('carteras.user_id','=',Auth::user()->id)
-        ->get();
-
-
-        $fiat = DB::table('fiats')
-        ->select('fiats.divisa','cartera_fiats.cantidad')
-        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
-        ->where('cartera_fiats.user_id','=', Auth::user()->id)
-        ->get();
-        $binance = new PreciosController();
-
-
-        return view('cartera',
-        [
-            'cryptos' => $cryptos,
-            'binance' => $binance,
-            'fiats' => $fiat
-        ]);
-    }
-
     public function vender(Request $request){
         //falta hacer comprobaciones antes de realizar cualquier operacion.
         $binance = new PreciosController();
@@ -243,5 +216,33 @@ class CarteraController extends Controller
 
 
     }
+
+    public function visualizar(){
+
+        $cryptos = DB::table('carteras')
+        ->select('cryptos.abr','carteras.cantidad')
+        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
+        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
+        ->where('carteras.user_id','=',Auth::user()->id)
+        ->get();
+
+
+        $fiat = DB::table('fiats')
+        ->select('fiats.divisa','cartera_fiats.cantidad')
+        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
+        ->where('cartera_fiats.user_id','=', Auth::user()->id)
+        ->get();
+        $binance = new PreciosController();
+
+
+        return view('cartera',
+        [
+            'cryptos' => $cryptos,
+            'binance' => $binance,
+            'fiats' => $fiat
+        ]);
+    }
+
+    
 
 }
