@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="flex mt-5 text-center">
-                    <div id="grafica" class="flex-1 box-border border-4" style=" width: 7%; height: 50em">
+                    <div id="grafica" class="flex-1  " style=" width: 7%; height: 50em">
                         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                         <script type="text/javascript">
                         new TradingView.widget({
@@ -33,7 +33,7 @@
                         </script>
                     </div>
 
-                    <div class="flex-1 box-border border-4">
+                    <div class="flex-1 ">
                         <div class="cryptohopper-web-widget" data-id="4" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR"></div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                 </div>
             </div>
         </body>
-        <footer class="footer relative pt-1 border-b-2" style="background-color:#202124">
+        <footer class="footer relative pt-1 " style="background-color:#202124">
             <div class="container mx-auto px-6">
 
                 <div class="sm:flex sm:mt-8">
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="container mx-auto px-6">
-                <div class="mt-16 border-t-2 border-gray-300 flex flex-col items-center">
+                <div class="mt-16 flex flex-col items-center">
                     <div class="sm:w-2/3 text-center py-6">
                         <p class="text-sm text-blue-700 font-bold mb-2">
                         </p>
