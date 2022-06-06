@@ -4,7 +4,7 @@
 <select wire:model="prueba">
     <option>Seleccione una cryptomoneda</option>
     @foreach ($cryptos as $crypto)
-        <option value="{{$crypto->id}}">{{$crypto->nombre}}</option>
+        <option value="{{$crypto->id}}">{{$crypto->abr}}</option>
     @endforeach
 </select>
 @if(!is_null($prueba))
