@@ -19,6 +19,12 @@ class CreateFiatsTable extends Migration
             $table->string('divisa')->default(0);
 
         });
+
+        DB::table('fiats')->insert(
+            array(
+                'nombre' => 'Euro',
+                'divisa' => 'EUR',
+            ));
     }
 
     /**

@@ -118,31 +118,6 @@ class CarteraController extends Controller
         return redirect('cartera/enviar');
 
     }
-       public function visualizar(){
-
-        $cryptos = DB::table('carteras')
-        ->select('cryptos.abr','carteras.cantidad')
-        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
-        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
-        ->where('carteras.user_id','=',Auth::user()->id)
-        ->get();
-
-
-        $fiat = DB::table('fiats')
-        ->select('fiats.divisa','cartera_fiats.cantidad')
-        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
-        ->where('cartera_fiats.user_id','=', Auth::user()->id)
-        ->get();
-        $binance = new PreciosController();
-
-
-        return view('cartera',
-        [
-            'cryptos' => $cryptos,
-            'binance' => $binance,
-            'fiats' => $fiat
-        ]);
-    }
 
     public function convertir(Request $request){
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
@@ -195,7 +170,45 @@ class CarteraController extends Controller
         ->update(['carteras.cantidad' => $total2]);
     }
 
-    
+    public function visualizar(){
+        $total = 0;
+        $cryptos = DB::table('carteras')
+        ->select('cryptos.abr','carteras.cantidad')
+        ->join('direcciones','direcciones.id','=','carteras.direccion_id')
+        ->join('cryptos','cryptos.id','=','direcciones.crypto_id')
+        ->where('carteras.user_id','=',Auth::user()->id)
+        ->get();
+
+
+
+
+        $fiat = DB::table('fiats')
+        ->select('fiats.divisa','cartera_fiats.cantidad')
+        ->join('cartera_fiats','fiats.id','=','cartera_fiats.fiat_id')
+        ->where('cartera_fiats.user_id','=', Auth::user()->id)
+        ->get();
+
+        $binance = new PreciosController();
+
+        foreach ($cryptos as $crypto){
+            $total += (round($binance->precio($crypto->abr . 'EUR')['price'],2) * $crypto->cantidad);
+        }
+
+        foreach($fiat as $fit){
+            $total += $fit->cantidad;
+        }
+
+        //eur to btc
+        $btc = $total / $binance->precio('BTCEUR')['price'];
+        return view('cartera',
+        [
+            'cryptos' => $cryptos,
+            'binance' => $binance,
+            'fiats' => $fiat,
+            'total' => $total,
+            'btc' => $btc
+        ]);
+    }
 
     public function vender(Request $request){
         //falta hacer comprobaciones antes de realizar cualquier operacion.
@@ -244,6 +257,40 @@ class CarteraController extends Controller
 
 
     }
- 
 
+    public function mercado(){
+        return view('mercado');
+    }
+
+    public function comprar(){
+        return view ('comprar', [
+            'cryptos' => Crypto::all()
+        ]);
+    }
+
+    public function checkout(Request $request){
+
+        $crypto = Crypto::select('abr')->where('id', '=', $request->crypto)->get();
+        $binance = new PreciosController();
+        $precio = $binance->precio($crypto[0]->abr . 'EUR');
+        $total = $request->cantidad * $precio['price'];
+
+       return view('checkout',[
+           'cantidad' => $request->cantidad,
+           'precio' => $total,
+           'abr' => $crypto[0]->abr,
+           'crypto_id' => $request->crypto,
+       ]);
+
+    }
+
+    public function retirar(){
+        return view('retirar');
+    }
+
+    public function retirada(Request $request){
+        return view('retirada',[
+            'cantidad' => $request->cantidad,
+        ]);
+    }
 }
