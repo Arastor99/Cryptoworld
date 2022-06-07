@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\User;
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -26,12 +25,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
-        if(env('APP_ENV') !== 'local')
-        {
-            $url->forceSchema('https');
-        }
         view()->composer('*', function($view){
             $id = Auth::id();
             View::share('img', User::select('profile_photo_path')->where('id', '=', $id)->get());
