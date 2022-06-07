@@ -541,3 +541,9 @@
 1654532913-9121-948788918,1654532913.9098,GET,/dashboard,Closure,200,60.74595451355,request
 1654532919-3040-240726330,1654532919.3011,GET,/cartera,"\App\Http\Controllers\CarteraController@visualizar",200,2884.5381736755,request
 1654534429-5062-1383023923,1654534429.5024,GET,/,"App\Http\Livewire\Index",200,19.99306678772,request
+1654617100-0938-643511541,1654617100.0272,GET,/,"App\Http\Livewire\Index",200,191.73002243042,request
+1654617100-2459-962192779,1654617100.24,GET,/livewire/livewire.js?id=c69d0f2801c01fcf8166,"Livewire\Controllers\LivewireJavaScriptAssets@source",200,13.740062713623,request
+1654617109-5681-304786445,1654617109.5638,GET,/login,"Laravel\Fortify\Http\Controllers\AuthenticatedSessionController@create",200,20.925045013428,request
+1654617730-7815-1240857441,1654617730.7107,GET,/,"App\Http\Livewire\Index",200,214.24698829651,request
+1654617730-9393-1681449638,1654617730.9369,GET,/livewire/livewire.js?id=c69d0f2801c01fcf8166,"Livewire\Controllers\LivewireJavaScriptAssets@source",200,7.8167915344238,request
+1654617735-7153-1434405595,1654617735.711,GET,/user/profile,"Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController@show",200,91.597080230713,request
