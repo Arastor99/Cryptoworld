@@ -172,6 +172,8 @@ class CarteraController extends Controller
 
     public function visualizar(){
         $total = 0;
+        $total_cryptos = 0;
+        $total_fiats = 0;
         $cryptos = DB::table('carteras')
         ->select('cryptos.abr','carteras.cantidad')
         ->join('direcciones','direcciones.id','=','carteras.direccion_id')
@@ -191,22 +193,28 @@ class CarteraController extends Controller
         $binance = new PreciosController();
 
         foreach ($cryptos as $crypto){
-            $total += (round($binance->precio($crypto->abr . 'EUR')['price'],2) * $crypto->cantidad);
+            $total_cryptos += (round($binance->precio($crypto->abr . 'EUR')['price'],2) * $crypto->cantidad);
         }
 
         foreach($fiat as $fit){
-            $total += $fit->cantidad;
+            $total_fiats += $fit->cantidad;
         }
-
+        $total = $total_cryptos + $total_fiats;
         //eur to btc
         $btc = $total / $binance->precio('BTCEUR')['price'];
+        $btc_cryptos = $total_cryptos / $binance->precio('BTCEUR')['price'];
+        $btc_fiats = $total_fiats / $binance->precio('BTCEUR')['price'];
         return view('cartera',
         [
             'cryptos' => $cryptos,
             'binance' => $binance,
             'fiats' => $fiat,
             'total' => $total,
-            'btc' => $btc
+            'total_cryptos' => $total_cryptos,
+            'total_fiats' => $total_fiats,
+            'btc' => $btc,
+            'btc_cryptos' => $btc_fiats,
+            'btc_fiats' => $btc_fiats,
         ]);
     }
 
@@ -267,9 +275,6 @@ class CarteraController extends Controller
             'cryptos' => Crypto::all()
         ]);
     }
-    public function retirar(){
-        return view('retirar');
-    }
 
     public function checkout(Request $request){
 
@@ -287,7 +292,9 @@ class CarteraController extends Controller
 
     }
 
-    
+    public function retirar(){
+        return view('retirar');
+    }
 
     public function retirada(Request $request){
         return view('retirada',[

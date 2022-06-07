@@ -1410,6 +1410,9 @@ input[type="range"]::-ms-fill-lower {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.-mt-px {
+  margin-top: -1px;
+}
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -1421,9 +1424,6 @@ input[type="range"]::-ms-fill-lower {
 }
 .mt-16 {
   margin-top: 4rem;
-}
-.-mt-px {
-  margin-top: -1px;
 }
 .box-border {
   box-sizing: border-box;
@@ -1689,6 +1689,16 @@ input[type="range"]::-ms-fill-lower {
   margin-right: calc(2.5rem * var(--tw-space-x-reverse));
   margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
+.space-y-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
+}
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1776,11 +1786,11 @@ input[type="range"]::-ms-fill-lower {
 .border-b {
   border-bottom-width: 1px;
 }
-.border-t-2 {
-  border-top-width: 2px;
-}
 .border-r {
   border-right-width: 1px;
+}
+.border-t-2 {
+  border-top-width: 2px;
 }
 .border-gray-300 {
   --tw-border-opacity: 1;
@@ -1801,6 +1811,10 @@ input[type="range"]::-ms-fill-lower {
   --tw-border-opacity: 1;
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
 .border-gray-600 {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
@@ -1808,10 +1822,6 @@ input[type="range"]::-ms-fill-lower {
 .border-blue-700 {
   --tw-border-opacity: 1;
   border-color: rgb(26 86 219 / var(--tw-border-opacity));
-}
-.border-gray-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 .border-white {
   --tw-border-opacity: 1;
@@ -2061,11 +2071,11 @@ input[type="range"]::-ms-fill-lower {
 .pb-1 {
   padding-bottom: 0.25rem;
 }
-.pl-5 {
-  padding-left: 1.25rem;
-}
 .pt-8 {
   padding-top: 2rem;
+}
+.pl-5 {
+  padding-left: 1.25rem;
 }
 .pr-2 {
   padding-right: 0.5rem;
@@ -2228,6 +2238,10 @@ input[type="range"]::-ms-fill-lower {
   --tw-text-opacity: 1;
   color: rgb(14 159 110 / var(--tw-text-opacity));
 }
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -2243,10 +2257,6 @@ input[type="range"]::-ms-fill-lower {
 .text-blue-800 {
   --tw-text-opacity: 1;
   color: rgb(30 66 159 / var(--tw-text-opacity));
-}
-.text-gray-200 {
-  --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 .text-gray-100 {
   --tw-text-opacity: 1;
@@ -2921,6 +2931,14 @@ input[type="range"]::-ms-fill-lower {
     flex-direction: row;
   }
 
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+
   .md\:gap-6 {
     gap: 1.5rem;
   }
@@ -2929,6 +2947,18 @@ input[type="range"]::-ms-fill-lower {
     --tw-space-x-reverse: 0;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
+  .md\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .md\:space-x-20 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(5rem * var(--tw-space-x-reverse));
+    margin-left: calc(5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .md\:border-t-0 {
@@ -2947,6 +2977,16 @@ input[type="range"]::-ms-fill-lower {
   .md\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 
   .md\:font-medium {
@@ -2969,6 +3009,12 @@ input[type="range"]::-ms-fill-lower {
 
   .lg\:w-1\/2 {
     width: 50%;
+  }
+
+  .lg\:space-x-60 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(15rem * var(--tw-space-x-reverse));
+    margin-left: calc(15rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .lg\:overflow-visible {
