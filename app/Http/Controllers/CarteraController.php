@@ -60,59 +60,74 @@ class CarteraController extends Controller
     }
 
     public function enviar(Request $request){
+        //terminado
         //falta controlar que la cantidad no pueda ser negativa en la base de datos -done-
         //controlar tambien que no puedas enviarte cryptos a ti mismo -done-
         //refactorizar la funcion para poder usarla con todas las cryptos y no tener que hacer una funcion para cada una de ellas. -done-
         //controlar que no se pueda enviar entre distintas monedas por ejemplo enviar 0.5btc a la cartera de ada -done-
 
+        $validated = $request->validate([
+            'direccion' => 'required|max:255',
+            'cantidad' => 'required',
+            'cryptoid' => 'required',
+        ]);
+
+        $direccion = $validated['direccion'];
+        $cantidad = $validated['cantidad'];
+        $cryptoid = $validated['cryptoid'];
+
         $disponible_emisor = Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id', '=','direcciones.id')
-        ->where('direcciones.crypto_id', '=', '1')
+        ->where('direcciones.crypto_id', '=', $cryptoid)
         ->where('carteras.user_id', '=', Auth::user()->id)
         ->get();
 
         $disponible_receptor = Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id', '=','direcciones.id')
-        ->where('direcciones.crypto_id', '=', $request->cryptoid)
-        ->where('direcciones.direccion', '=', $request->direccion)
+        ->where('direcciones.crypto_id', '=', $cryptoid)
+        ->where('direcciones.direccion', '=', $direccion)
         ->get();
 
-        $direccion = Direccion::select('direccion')
-        ->where('crypto_id', '=', $request->cryptoid)
+        $direccion_propia = Direccion::select('direccion')
+        ->where('crypto_id', '=', $cryptoid)
         ->where('user_id','=', Auth::user()->id)
         ->get();
 
         //controla que el usuario no pueda enviarse a si mismo.
-        if($direccion[0]->direccion == $request->direccion)
+        if($direccion_propia[0]->direccion == $direccion)
         {
+
             return redirect('/cartera/enviar')->with('error','No puedes enviarte activos a ti mismo');
-        }
 
+        }
         //si el usuario dispone de menos dinero del que quiere enviar se le redirigira de nuevo a la vista enviar
-        if ($disponible_emisor[0]->cantidad < $request->cantidad)
+        if ($disponible_emisor[0]->cantidad < $cantidad)
         {
+
             return redirect('/cartera/enviar')->with('error', 'No dispones de esa cantidad');
+
         }
+        $cryptoid1 = Direccion::select('crypto_id')->where('direccion', '=', $direccion)->get();
 
-        $cryptoid = Direccion::select('crypto_id')->where('direccion', '=', $request->direccion)->get();
+        if($cryptoid1[0]->crypto_id != $cryptoid){
 
-        if($cryptoid[0]->crypto_id != $request->cryptoid){
             return redirect('/cartera/enviar')->with('error', 'La cartera a la que estar enviando no pertenece a la misma moneda');
+
         }
 
-        $restante = (float) $disponible_emisor[0]->cantidad - (float) $request->cantidad;
-        $balancenuevo =  (float) $disponible_receptor[0]->cantidad + (float) $request->cantidad;
+        $restante = (float) $disponible_emisor[0]->cantidad - (float) $cantidad;
+        $balancenuevo =  (float) $disponible_receptor[0]->cantidad + (float) $cantidad;
 
         Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id', '=','direcciones.id')
-        ->where('direcciones.crypto_id', '=', $request->cryptoid)
+        ->where('direcciones.crypto_id', '=', $cryptoid)
         ->where('carteras.user_id', '=', Auth::user()->id)
         ->update( ['carteras.cantidad' => $restante]);
 
         Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id', '=','direcciones.id')
-        ->where('direcciones.crypto_id', '=', $request->cryptoid)
-        ->where('direcciones.direccion', '=', $request->direccion)
+        ->where('direcciones.crypto_id', '=', $cryptoid)
+        ->where('direcciones.direccion', '=', $direccion)
         ->update(['carteras.cantidad' => $balancenuevo]);
 
         return redirect('cartera/enviar');
@@ -123,25 +138,48 @@ class CarteraController extends Controller
         //se recuperan los datos de nuevo por si llegan modificados externamente y se realizaran excepciones en caso de discrepancias.
         //falta validaciones
         //cambiar floats por decimal o numeric
-        $crypto1 = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
-        $crypto2 = Crypto::select('abr')->where('id', '=', $request->cryptoid2)->get();
+
+        $validated = $request->validate([
+            'cantidad' => 'required|max:255',
+            'cryptoid1' => 'required',
+            'cryptoid2' => 'required',
+        ]);
+
+        $cantidad = $validated['cantidad'];
+        $cryptoid1 = $validated['cryptoid1'];
+        $cryptoid2 = $validated['cryptoid2'];
+
+        $crypto1 = Crypto::select('abr')->where('id', '=', $cryptoid1)->get();
+        $crypto2 = Crypto::select('abr')->where('id', '=', $cryptoid2)->get();
         $binance = new PreciosController();
         $precio1 = $binance->precio($crypto1[0]->abr . 'EUR');
         $precio2 = $binance->precio($crypto2[0]->abr . 'EUR');
 
 
+        $direccion = Direccion::select('direccion')->where('crypto_id','=', $cryptoid1)->get();
+
+        $disponible = Cartera::select('carteras.cantidad')
+        ->join('direcciones','carteras.direccion_id', '=','direcciones.id')
+        ->where('direcciones.crypto_id', '=', $cryptoid1)
+        ->where('direcciones.direccion', '=', $direccion[0]->direccion)
+        ->get();
+        if ($disponible[0]->cantidad < $cantidad)
+        {
+            return redirect('/cartera/convertir')->with('error', 'No dispones de esa cantidad');
+        }
+
         //$elimina es la cantidad que hay que retirarle al usuario de la crypto1
         //$recibe es la cantidad que hay que añadirle al usuario de la crypto2
-        $elimina = $request->cantidad;
+        $elimina = $cantidad;
         $recibe = ((float) $elimina * (float) $precio1['price']) / (float) $precio2['price'];
 
         $tiene = Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
-        ->where('direcciones.crypto_id', '=', $request->cryptoid1)->get();
+        ->where('direcciones.crypto_id', '=', $cryptoid1)->get();
 
 
-        if($tiene < $request->cantidad){
+        if($tiene < $cantidad){
             return redirect('/cartera/convertir')->with('error','No dispones de esa cantidad');
         }
         $total = (float) $tiene[0]->cantidad - (float) $elimina;
@@ -149,7 +187,7 @@ class CarteraController extends Controller
         Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
-        ->where('direcciones.crypto_id', '=', $request->cryptoid1)
+        ->where('direcciones.crypto_id', '=', $cryptoid1)
         ->update(['carteras.cantidad' => $total]);
 
 
@@ -157,7 +195,7 @@ class CarteraController extends Controller
         $tiene2 = Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
-        ->where('direcciones.crypto_id', '=', $request->cryptoid2)->get();
+        ->where('direcciones.crypto_id', '=', $cryptoid2)->get();
 
         $total2 = (float) $tiene2[0]->cantidad + (float) $recibe;
 
@@ -220,14 +258,22 @@ class CarteraController extends Controller
 
     public function vender(Request $request){
         //falta hacer comprobaciones antes de realizar cualquier operacion.
+
+        $validated = $request->validate([
+            'cantidad' => 'required|max:255',
+            'cryptoid' => 'required',
+        ]);
+
+        $cantidad = $validated['cantidad'];
+        $cryptoid = $validated['cryptoid'];
         $binance = new PreciosController();
 
         $abr = Crypto::select('abr')
-        ->where('id','=', $request->cryptoid)
+        ->where('id','=', $cryptoid)
         ->first();
 
         $precio = $binance->precio($abr->abr . 'EUR');
-        $total = (float) $request->cantidad * (float) $precio['price'];
+        $total = (float) $cantidad * (float) $precio['price'];
 
         $cantidadAntigua = Cartera::select('cantidad')
                         ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
@@ -236,11 +282,11 @@ class CarteraController extends Controller
                         ->where('cryptos.abr', '=', $abr->abr)
                         ->first();
 
-        if($cantidadAntigua < $request->cantidad){
-            return redirect('/cartera/enviar')->with('error','No dispones de esa cantidad.');
+        if($cantidadAntigua->cantidad < $cantidad){
+            return redirect('/cartera/vender')->with('error','No dispones de esa cantidad.');
         }
 
-        $cantidadNueva = (float) $cantidadAntigua->cantidad - (float) $request->cantidad;
+        $cantidadNueva = (float) $cantidadAntigua->cantidad - (float) $cantidad;
 
         Cartera::select('cantidad')
         ->join('direcciones','carteras.direccion_id', '=', 'direcciones.id')
