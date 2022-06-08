@@ -16,16 +16,16 @@
                 <div class="flex flex-col md:flex-row py-10 border-b-2 border-gray-600 space-y-10 md:space-y-0 px-2  md:items-center md:justify-between">
                     <div class="space-y-5">
                         <h4 class="font-medium">Balance estimado</h4>
-                        <h3 class="text-2xl font-bold">{{$total}}€ BTC {{round($btc,9)}}<h3>
+                        <h3 class="text-2xl font-bold">{{round($total,2)}}€  {{round($btc,9)}} BTC<h3>
                     </div>
                     <div class="flex items-center justify-between md:space-x-20 lg:space-x-60">
                         <div class="space-y-5">
                             <h4 class="font-medium">Balance spot</h4>
-                            <h3 class="text-xl font-bold">{{$total_cryptos}}€ BTC {{round($btc_cryptos,9)}}</h3>
+                            <h3 class="text-xl font-bold">{{round($total_cryptos,2)}}€   {{round($btc_cryptos,9)}} BTC</h3>
                         </div>
                         <div class="space-y-5">
                             <h4 class="font-medium">Balance fiat</h4>
-                            <h3 class="text-xl font-bold">{{$total_fiats}}€ BTC {{round($btc_fiats,9)}}</h3>
+                            <h3 class="text-xl font-bold">{{round($total_fiats,2)}} € {{round($btc_fiats,9)}} BTC</h3>
                         </div>
                     </div>
                 </div>

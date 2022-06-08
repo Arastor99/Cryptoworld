@@ -10,7 +10,6 @@ use App\Http\Controllers\CarteraController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\StripeController;
-use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\URL;
 | contains the "web" middleware group. Now create something great!
 |
 */
-URL::forceScheme('https');
+
 
 Route::get('/', Index::class);
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
