@@ -30,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url)
     {
-        URL::forceScheme('https');
         view()->composer('*', function($view){
             $id = Auth::id();
             View::share('img', User::select('profile_photo_path')->where('id', '=', $id)->get());
