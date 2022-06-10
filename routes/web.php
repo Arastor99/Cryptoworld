@@ -10,6 +10,7 @@ use App\Http\Controllers\CarteraController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\StripeController;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ use App\Http\Controllers\StripeController;
 |
 */
 
+
+URL::forceScheme('htttps');
 
 Route::get('/', Index::class);
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {

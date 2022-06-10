@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Fonts -->
@@ -88,6 +89,9 @@
                     <li>
                     <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900">Cartera</a>
                     </li>
+                    <li>
+                        <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900">Cartera</a>
+                        </li>
                 </ul>
                 <div class="py-1">
                     <form method="POST" action="{{ route('logout') }}">
@@ -121,6 +125,42 @@
 
   <main> {{$slot}} </main>
   <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+
+  <footer class="footer relative pt-1 " style="background-color:#202124">
+    <div class="container mx-auto px-6">
+
+        <div class="sm:flex sm:mt-8">
+            <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mb-2">Acerca de nosotros</span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Acerca de Cryptoworld</a></span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Blog</a></span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">Declaración de divulgación de riesgos</a></span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Contactanos</span>
+                    <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"><i class="fa-solid fa-envelope"></i> soporte@cryptoworld.com</a></span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-solid fa-location-dot"></i> C\ Alegria 8, Zaragoza</a></span>
+                    <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"></a><i class="fa-solid fa-phone"></i> +34 678529173</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Redes sociales</span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-instagram"></i> Instagram</a></span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-facebook"></i> Facebook</a></span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-brands fa-twitter"></i> Twitter</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-6">
+        <div class="mt-16 flex flex-col items-center">
+            <div class="sm:w-2/3 text-center py-6">
+                <p class="text-sm text-blue-700 font-bold mb-2">
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 
 </html>
