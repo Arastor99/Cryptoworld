@@ -1,44 +1,76 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use App\Models\Crypto;
 use Livewire\Component;
 use App\Http\Controllers\PreciosController;
 use App\Models\Cartera;
-use App\Models\Fiat;
 use Illuminate\Support\Facades\Auth;
 
 class Vender extends Component
 {
-    public $crypto;
-    public $crypto1;
-    public $fiat;
-    public $fiat1;
+    public $cripto1;
     public $cantidad;
-    public $precio;
     public $nombre1;
-    public $nombre2;
-    public $recibir;
+    public $total;
+    public $precio;
+    public $disponible;
     public function render()
     {
-        return view ('livewire.vender', [
-            'cryptos' => Crypto::all(),
-            'fiats' => Fiat::all(),
-
+        return view('livewire.vender', [
+            'cryptos' => Crypto::all()
         ]);
     }
 
-    public function updatedcrypto1($crypto_id){
-        $this->nombre1 = Crypto::select('abr')->where('id','=', $crypto_id)->get();
-        $binance = new PreciosController();
-        $this->precio = $binance->precio($this->nombre1[0]->abr . 'EUR');
-    }
-    public function updatedfiat1($crypto_id){
-        $this->nombre2 = Crypto::select('abr')->where('id','=', $crypto_id)->get();
+
+
+
+    public function updatedcripto1()
+    {
+
+        $this->disponible = Cartera::select('cantidad')
+            ->join('direcciones', 'carteras.direccion_id', '=', 'direcciones.id')
+            ->join('cryptos', 'cryptos.id', '=', 'direcciones.crypto_id')
+            ->where('carteras.user_id', '=', Auth::user()->id)
+            ->where('cryptos.id', '=', $this->cripto1)
+            ->first();
+        $this->disponible = $this->disponible->cantidad;
+
+
+        if (!empty($this->cripto1)) {
+            $this->nombre1 = Crypto::select('abr')->where('id', '=', $this->cripto1)->get();
+            $this->nombre1 = $this->nombre1[0]->abr;
+        }
+
+
+        if (!empty($this->cripto1) && !empty($this->cantidad)) {
+            $binance = new PreciosController();
+
+            $this->precio = $binance->precio($this->nombre1 . 'EUR');
+            $this->total = $this->cantidad * $this->precio['price'];
+
+        } else {
+        }
     }
 
-    public function updatedcantidad(){
-        $this->recibir = (float) $this->cantidad * (float) $this->precio['price'];
-    }
 
+    public function updatedcantidad()
+    {
+
+        if (!empty($this->cripto1)) {
+            $this->nombre1 = Crypto::select('abr')->where('id', '=', $this->cripto1)->get();
+            $this->nombre1 = $this->nombre1[0]->abr;
+        }
+
+
+
+        if (!empty($this->cripto1) && !empty($this->cantidad)) {
+            $binance = new PreciosController();
+
+            $this->precio = $binance->precio($this->nombre1 . 'EUR');
+            $this->total = $this->cantidad * $this->precio['price'];
+        } else {
+        }
+    }
 }

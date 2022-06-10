@@ -11,6 +11,7 @@ use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\URL;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -5,7 +5,7 @@
             <div class="min-h-screen container mx-auto  text-white" style="background-color: #181A20">
 
                 <div class="font-bold flex flex-col md:flex-row  justify-between p-2 text-white">
-                    <h1 class="text-lg md:text-4xl">Cuenta spot</h1>
+                    <h1 class="text-lg md:text-4xl ">Cuenta spot</h1>
                     <div class="text-base md:text-xl">
                         <button class="p-3 bg-blue-500 rounded-md">Depositar</button>
                         <button class="p-3">Retirar</button>
