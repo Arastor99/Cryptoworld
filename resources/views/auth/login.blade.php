@@ -38,7 +38,7 @@
                     <span class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">in</span>
                 </div>
                 <p class="text-gray-100">
-                    or use email your account
+                     O usa tu email
                 </p>
                 <form method="POST" action="{{ route('login') }}" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
                     @csrf

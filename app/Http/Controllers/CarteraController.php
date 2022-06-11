@@ -97,21 +97,21 @@ class CarteraController extends Controller
         if($direccion_propia[0]->direccion == $direccion)
         {
 
-            return redirect('/cartera/enviar')->with('error','No puedes enviarte activos a ti mismo');
+            return redirect('/cartera/enviar')->withErrors('error','No puedes enviarte activos a ti mismo');
 
         }
         //si el usuario dispone de menos dinero del que quiere enviar se le redirigira de nuevo a la vista enviar
         if ($disponible_emisor[0]->cantidad < $cantidad)
         {
 
-            return redirect('/cartera/enviar')->with('error', 'No dispones de esa cantidad');
+            return redirect('/cartera/enviar')->withErrors('No dispones de esa cantidad');
 
         }
         $cryptoid1 = Direccion::select('crypto_id')->where('direccion', '=', $direccion)->get();
 
         if($cryptoid1[0]->crypto_id != $cryptoid){
 
-            return redirect('/cartera/enviar')->with('error', 'La cartera a la que estar enviando no pertenece a la misma moneda');
+            return redirect('/cartera/enviar')->withErrors('La direccion introducida no pertenece a la moneda que esta intentando enviar');
 
         }
 
@@ -130,7 +130,7 @@ class CarteraController extends Controller
         ->where('direcciones.direccion', '=', $direccion)
         ->update(['carteras.cantidad' => $balancenuevo]);
 
-        return redirect('cartera/enviar');
+        return redirect('cartera/enviar')->with('success','Envio realizado correctamente');
 
     }
 
@@ -165,7 +165,7 @@ class CarteraController extends Controller
         ->get();
         if ($disponible[0]->cantidad < $cantidad)
         {
-            return redirect('/cartera/convertir')->with('error', 'No dispones de esa cantidad');
+            return redirect('/cartera/convertir')->withErrors('No dispones de esa cantidad');
         }
 
         //$elimina es la cantidad que hay que retirarle al usuario de la crypto1
@@ -180,7 +180,7 @@ class CarteraController extends Controller
 
 
         if($tiene < $cantidad){
-            return redirect('/cartera/convertir')->with('error','No dispones de esa cantidad');
+            return redirect('/cartera/convertir')->withErrors('No dispones de esa cantidad');
         }
         $total = (float) $tiene[0]->cantidad - (float) $elimina;
 
@@ -206,6 +206,8 @@ class CarteraController extends Controller
         ->where('carteras.user_id','=', Auth::user()->id)
         ->where('direcciones.crypto_id', '=', $request->cryptoid2)
         ->update(['carteras.cantidad' => $total2]);
+
+        return redirect()->back()->with('success', 'Conversión realizada con exito');
     }
 
     public function visualizar(){
@@ -283,7 +285,7 @@ class CarteraController extends Controller
                         ->first();
 
         if($cantidadAntigua->cantidad < $cantidad){
-            return redirect('/cartera/vender')->with('error','No dispones de esa cantidad.');
+            return redirect('/cartera/vender')->withErrors('No dispones de esa cantidad.');
         }
 
         $cantidadNueva = (float) $cantidadAntigua->cantidad - (float) $cantidad;
@@ -309,7 +311,7 @@ class CarteraController extends Controller
                 ->where('cartera_fiats.user_id', '=', Auth::user()->id)
                 ->update(['cartera_fiats.cantidad' => $eurosNuevos]);
 
-
+        return redirect()->back()->with('success', 'Venta realizada con exito');
     }
 
     public function mercado(){

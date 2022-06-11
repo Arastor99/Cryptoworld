@@ -1,24 +1,48 @@
-<div>
-    <label for="">¿Que crypto quieres recibir?</label>
+<div class="bg-oscurito ">
 
-<select wire:model="prueba">
-    <option>Seleccione una cryptomoneda</option>
-    @foreach ($cryptos as $crypto)
-        <option value="{{$crypto->id}}">{{$crypto->abr}}</option>
-    @endforeach
-</select>
-@if(!is_null($prueba))
-<div> Cantidad disponible: {{$prueba[0]->cantidad}}</div>
-<form action="/cartera/enviar" method="POST">
-    @csrf
-    <label for="direccion"> Direccion </label>
-    <input type="text" name="direccion" id="direccion">
-    <br>
-    <label for="cantidad"> Cantidad </label>
-    <input type="text" name="cantidad" id="cantidad">
-    <br>
-    <input type="hidden" name="cryptoid" id="cryptoid" value={{$prueba[0]->crypto_id}}>
-    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Enviar</button>
-</form>
-@endif
+    <div class="min-h-screen container mx-auto  text-white " style="background-color: #181A20">
+
+        <div class="h-48 bg-repeat-x object-scale-down md:h-96  " style="background-image: url('/img/bg.png') "></div>
+
+
+        <div class="bg-oscurito  flex place-content-center  h-screen rounded-t-[5rem] -mt-20  ">
+
+            <form action="/cartera/enviar" method="post">
+                @csrf
+                <div class=" h-96 mt-20 place-content-center  grid grid-cols-4 grow mx-12">
+
+                    <h1 class="h-auto w-auto  col-span-2 ">DIrección</h1>
+                    <h1 class="h-auto w-auto  col-span-2">Disponible: {{ $disponible }} {{ $nombre }}</h1>
+                    <input type="text" name="direccion" id="direccion"
+                        class="flex h-14 w-auto border-none rounded-l-xl text-black col-span-3 bg-gray-200">
+                    <select wire:model="cripto"
+                        class="border-none border-t-2 rounded-r-xl col-span-1 bg-gray-200 text-black">
+                        <option></option>
+                        @foreach ($cryptos as $crypto)
+                            <option class="text-black" value="{{ $crypto->id }}"
+                                style="background-image:url('/img/btc.png');">{{ $crypto->abr }}</option>
+                        @endforeach
+                    </select>
+                    <h1 class="h-auto w-auto col-span-4 mt-8">Cantidad</h1>
+                    <input type="text" name="cantidad" id="cantidad"
+                        class="h-14 w-auto border-none rounded-xl col-span-4 bg-gray-200 text-black ">
+                    @if (session()->has('success'))
+                        <h2 class="text-green-400 col-start-3">
+                            {{ session()->get('success') }}
+                        </h2>
+                    @endif
+                    @if ($errors->any())
+                        <h2 class="text-red-400 col-start-3">{{ $errors->first() }}</h2>
+                    @endif
+                    <button type="submit"
+                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2">Convertir</button>
+                    <input type="hidden" name="cryptoid" id="cryptoid" value={{ $cripto }}>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
 </div>
