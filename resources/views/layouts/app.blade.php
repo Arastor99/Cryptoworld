@@ -123,7 +123,7 @@
     </div>
   </nav>
 
-  <main> {{$slot}} </main>
+  <main class="bg-oscurito"> {{$slot}} </main>
   <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 
   <footer class="footer relative pt-1 " style="background-color:#202124">
