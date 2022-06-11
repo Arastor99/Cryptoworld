@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cartera;
 use App\Models\CarteraFiat;
+use App\Models\Crypto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -24,8 +25,8 @@ class StripeController extends Controller
      */
     public function stripePost(Request $request)
     {
-
         $binance = new PreciosController();
+        dd($request);
         $precio = $binance->precio($request->abr . 'EUR');
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([

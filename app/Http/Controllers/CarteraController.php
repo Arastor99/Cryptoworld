@@ -149,13 +149,17 @@ class CarteraController extends Controller
         $cryptoid1 = $validated['cryptoid1'];
         $cryptoid2 = $validated['cryptoid2'];
 
+
+
         $crypto1 = Crypto::select('abr')->where('id', '=', $cryptoid1)->get();
         $crypto2 = Crypto::select('abr')->where('id', '=', $cryptoid2)->get();
         $binance = new PreciosController();
         $precio1 = $binance->precio($crypto1[0]->abr . 'EUR');
         $precio2 = $binance->precio($crypto2[0]->abr . 'EUR');
 
-
+        if($cantidad <= 0){
+            return redirect('/cartera/convertir')->withErrors('No puedes convertir 0 o menor que 0');
+        }
         $direccion = Direccion::select('direccion')->where('crypto_id','=', $cryptoid1)->get();
 
         $disponible = Cartera::select('carteras.cantidad')
@@ -325,17 +329,16 @@ class CarteraController extends Controller
     }
 
     public function checkout(Request $request){
-
-        $crypto = Crypto::select('abr')->where('id', '=', $request->crypto)->get();
+        dd($request->recibir);
+        $crypto = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
         $binance = new PreciosController();
-        $precio = $binance->precio($crypto[0]->abr . 'EUR');
-        $total = $request->cantidad * $precio['price'];
-
+        $total = $request->cantidad;
        return view('checkout',[
            'cantidad' => $request->cantidad,
            'precio' => $total,
            'abr' => $crypto[0]->abr,
-           'crypto_id' => $request->crypto,
+           'crypto_id' => $request->cryptoid1,
+           'recibir' => $request->recibir,
        ]);
 
     }

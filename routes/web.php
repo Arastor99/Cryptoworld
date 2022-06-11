@@ -10,6 +10,7 @@ use App\Http\Controllers\CarteraController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\StripeController;
+use App\Http\Livewire\Comprar;
 use Illuminate\Support\Facades\URL;
 
 /*
@@ -41,7 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/cartera/vender', [Carter
 Route::middleware(['auth:sanctum', 'verified'])->get('/mercado',[CarteraController::class, 'mercado']);
 
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
-Route::middleware(['auth:sanctum', 'verified'])->get('comprar', [CarteraController::class, 'comprar']);
+Route::middleware(['auth:sanctum', 'verified'])->get('comprar', Comprar::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('checkout', [CarteraController::class, 'checkout']);
 
 Route::post('stripe1', [StripeController::class, 'stripePost1'])->name('stripe.post1');
