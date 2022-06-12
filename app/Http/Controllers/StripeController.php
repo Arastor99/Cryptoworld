@@ -25,13 +25,13 @@ class StripeController extends Controller
      */
     public function stripePost(Request $request)
     {
+
         $binance = new PreciosController();
-        dd($request);
         $precio = $binance->precio($request->abr . 'EUR');
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
 
-                "amount" => (float) $precio['price'] * 100,
+                "amount" => (float) $request->cantidad * 100,
                 "currency" => "eur",
                 "source" => $request->stripeToken,
                 "description" => "Esta pago es prueba"
@@ -45,12 +45,13 @@ class StripeController extends Controller
         ->where('carteras.user_id','=', Auth::user()->id)
         ->where('direcciones.crypto_id', '=', $request->crypto_id)->get();
 
-
+        $cantidad_cripto = (float) $request->cantidad / (float) $precio['price'];
+        $total = (float) $cantidadActual[0]->cantidad + $cantidad_cripto;
         Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
         ->where('direcciones.crypto_id', '=', $request->crypto_id)
-        ->update(['carteras.cantidad' => $cantidadActual[0]->cantidad + $request->cantidad]);
+        ->update(['carteras.cantidad' => $total]);
         return app('App\Http\Controllers\CarteraController')->visualizar();
     }
 

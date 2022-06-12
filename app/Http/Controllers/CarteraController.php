@@ -65,7 +65,6 @@ class CarteraController extends Controller
         //controlar tambien que no puedas enviarte cryptos a ti mismo -done-
         //refactorizar la funcion para poder usarla con todas las cryptos y no tener que hacer una funcion para cada una de ellas. -done-
         //controlar que no se pueda enviar entre distintas monedas por ejemplo enviar 0.5btc a la cartera de ada -done-
-
         $validated = $request->validate([
             'direccion' => 'required|max:255',
             'cantidad' => 'required',
@@ -257,7 +256,7 @@ class CarteraController extends Controller
             'total_cryptos' => $total_cryptos,
             'total_fiats' => $total_fiats,
             'btc' => $btc,
-            'btc_cryptos' => $btc_fiats,
+            'btc_cryptos' => $btc_cryptos,
             'btc_fiats' => $btc_fiats,
         ]);
     }
@@ -329,7 +328,6 @@ class CarteraController extends Controller
     }
 
     public function checkout(Request $request){
-        dd($request->recibir);
         $crypto = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
         $binance = new PreciosController();
         $total = $request->cantidad;

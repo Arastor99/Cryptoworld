@@ -8,7 +8,7 @@
 
 
         <div class="bg-oscurito flex place-content-center  h-screen rounded-t-[3rem] -pt-16 ">
-            <form action="/checkout" method="post" class=" h-96 mt-20 place-content-center  grid grid-cols-4 grow mx-12 p-20">
+            <form action="/checkout" method="post" onsubmit="target_popup(this)" class=" h-96 mt-20 place-content-center  grid grid-cols-4 grow mx-12 p-20">
                 @csrf
                     <h1 class="h-auto w-auto  col-span-3 ">Cantidad</h1>
                     <input wire:model="cantidad" type="text" name="cantidad" id="cantidad"

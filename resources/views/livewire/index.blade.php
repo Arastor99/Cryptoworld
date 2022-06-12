@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="flex mt-5 text-center">
-                    <div id="grafica" class="flex-1  " style=" width: 7%; height: 50em">
+                    <div id="grafica" class="flex-1  pb-4" style=" width: 7%; height: 50em">
                         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                         <script type="text/javascript">
                         new TradingView.widget({

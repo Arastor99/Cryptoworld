@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\URL;
 | contains the "web" middleware group. Now create something great!
 |
 */
-URL::forceScheme('https');
+//URL::forceScheme('https');
 
 Route::get('/', Index::class);
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -45,7 +45,6 @@ Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.pos
 Route::middleware(['auth:sanctum', 'verified'])->get('comprar', Comprar::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('checkout', [CarteraController::class, 'checkout']);
 
-Route::post('stripe1', [StripeController::class, 'stripePost1'])->name('stripe.post1');
 Route::get('retirar', [CarteraController::class, 'retirar']);
 Route::middleware(['auth:sanctum', 'verified'])->post('retirada', [CarteraController::class, 'retirada']);
 
