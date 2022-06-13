@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div id="grafica" class="h-auto" >
+    <div id="grafica" class="flex items-center justify-center">
         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
         <script type="text/javascript">
         new TradingView.widget({

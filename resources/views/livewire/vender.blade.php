@@ -3,7 +3,7 @@
     <div class="min-h-screen container mx-auto  text-white " style="background-color: #181A20">
 
         <div class="h-48 bg-repeat-x object-scale-down flex items-center justify-center " style="background-image: url('/img/bg.png'); background-size: contain; background-size: 100%;">
-            <h1 class="text-3xl"><b>Cryptoworld Convert</b></h1>
+            <h1 class="text-3xl"><b>Cryptoworld Sell</b></h1>
         </div>
 
 
@@ -24,7 +24,7 @@
                     </select>
                     <h1 class="h-auto w-auto col-span-4 mt-8">Recibes</h1>
                     <label  type="text" name="cantidad" id="cantidad" class="h-14 w-auto border-none rounded-l-xl col-span-3 bg-gray-200 text-black ">@if(!empty($total)) {{round($total,2)}}@endif</label>
-                    <label  type="text" name="fiat" id="fiat" class="h-14 w-auto border-none rounded-r-xl col-span-1 bg-gray-200 text-black ">Euros</label>
+                    <label  type="text" name="fiat" id="fiat" class="h-14 w-auto border-none rounded-r-xl col-span-1 bg-gray-200 text-black text-xl font-bold flex items-center justify-center">Euros (€)</label>
                     @if (session()->has('success'))
                         <h2 class="text-green-400 col-start-4">
                             {{ session()->get('success') }}

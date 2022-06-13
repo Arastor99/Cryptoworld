@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->default('profile-photos/profile_default.png');
             $table->timestamps();
-            $table->boolean('admin')->default('false');
+            $table->boolean('es_admin')->default('false');
         });
     }
 

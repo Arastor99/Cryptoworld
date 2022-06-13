@@ -3,7 +3,7 @@
     <div class="min-h-screen container mx-auto  text-white " style="background-color: #181A20">
 
         <div class="h-48 bg-repeat-x object-scale-down flex items-center justify-center " style="background-image: url('/img/bg.png'); background-size: contain; background-size: 100%;">
-            <h1 class="text-3xl"><b>Cryptoworld Convert</b></h1>
+            <h1 class="text-3xl"><b>Cryptoworld Recieve</b></h1>
         </div>
 
 
