@@ -9,43 +9,39 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Fonts -->
+
   <link href="https://fonts.googleapis.com/css2?family=Tinos&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
+
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
   @livewireStyles
-  <!-- Scripts -->
+
   <script src="{{ mix('js/app.js') }}" defer></script>
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </head>
 
 <body>
   @livewireScripts()
-  <!-- This example requires Tailwind CSS v2.0+ -->
+
 
   <nav class="px-2 bg-slate-700 p-3 text-white dark:bg-gray-800">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
       <div class="flex items-center space-x-10">
-        <a href="#" class="flex items-center">
-          <!-- IMAGEN -->
+        <a href="/" class="flex items-center">
 
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Cryptoworld</span>
+
+          <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Cryptoworld</span>
         </a>
         <ul class="hidden md:flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
           <li>
-            <a href="/" class="block px-4 py-2 hover:bg-slate-900 rounded-md" aria-current="page">Home</a>
-          </li>
-
-          <li>
-            <a href="/comprar" class="block px-4 py-2 hover:bg-slate-900 rounded-md">Comprar crypto</a>
+            <a href="/comprar" class="block px-4 py-2 hover:bg-slate-900 rounded-md">Comprar cripto</a>
           </li>
           <li>
             <a href="/mercado" class="block px-4 py-2 hover:bg-slate-900 rounded-md">Mercado</a>
           </li>
           <li>
-            <a href="#" class="block px-4 py-2 hover:bg-slate-900 rounded-md">Contact</a>
+            <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900 rounded-md">Activos</a>
           </li>
         </ul>
       </div>
@@ -61,17 +57,13 @@
       <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
         <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
           <li class="flex md:hidden">
-            <a href="/" class="block px-4 py-2 hover:bg-slate-900" aria-current="page">Home</a>
-          </li>
-
-          <li class="flex md:hidden">
-            <a href="/comprar" class="block px-4 py-2 hover:bg-slate-900">Comprar crypto</a>
+            <a href="/comprar" class="block px-4 py-2 hover:bg-slate-900">Comprar cripto</a>
           </li>
           <li class="flex md:hidden">
             <a href="/mercado" class="block px-4 py-2 hover:bg-slate-900">Mercado</a>
           </li>
           <li class="flex md:hidden">
-            <a href="#" class="block px-4 py-2 hover:bg-slate-900">Contact</a>
+            <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900">Activos</a>
           </li>
         @auth
             <li>
@@ -89,9 +81,11 @@
                     <li>
                     <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900">Cartera</a>
                     </li>
+                    @if(Auth::user()->es_admin)
                     <li>
-                        <a href="/cartera" class="block px-4 py-2 hover:bg-slate-900">Cartera</a>
+                        <a href="/usuarios" class="block px-4 py-2 hover:bg-slate-900">Administrar usuarios</a>
                         </li>
+                    @endif
                 </ul>
                 <div class="py-1">
                     <form method="POST" action="{{ route('logout') }}">
@@ -101,7 +95,7 @@
                                         this.closest('form').submit(); " role="button">
                                 <i class="fas fa-sign-out-alt"></i>
 
-                                {{ __('Log Out') }}
+                                {{ __('Cerrar Sesión') }}
                             </a>
                         </div>
                     </form>
@@ -123,7 +117,7 @@
     </div>
   </nav>
 
-  <main class="bg-oscurito"> {{$slot}} </main>
+  <main class="bg-oscurito min-h-screen"> {{$slot}} </main>
   <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 
   <footer class="footer relative pt-1 " style="background-color:#202124">
@@ -141,7 +135,7 @@
                     <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Contactanos</span>
                     <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"><i class="fa-solid fa-envelope"></i> soporte@cryptoworld.com</a></span>
                     <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500"><i class="fa-solid fa-location-dot"></i> C\ Alegria 8, Zaragoza</a></span>
-                    <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"></a><i class="fa-solid fa-phone"></i> +34 678529173</span>
+                    <span class="my-2"><a href="#" class="text-white text-md hover:text-blue-500"><i class="fa-solid fa-phone"></i> +34 678529173</a></span>
                 </div>
                 <div class="flex flex-col">
                     <span class="font-bold text-white uppercase mt-4 md:mt-0 mb-2">Redes sociales</span>

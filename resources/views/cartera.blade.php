@@ -7,10 +7,10 @@
                 <div class="font-bold flex flex-col md:flex-row  justify-between p-2 text-white">
                     <h1 class="text-lg md:text-4xl ">Cuenta spot</h1>
                     <div class="text-base md:text-xl">
-                        <button class="p-3 bg-blue-500 rounded-md"><a href="/cartera/recibir">Depositar</a></button>
-                        <button class="p-3"><a href="/cartera/vender">Retirar</a></button>
-                        <button class="p-3"><a href="/cartera/enviar">Enviar</a></button>
-                        <button class="p-3"><a href="/cartera/convertir">Convertir</a></button>
+                        <button class="p-3 bg-blue-500 rounded-md hover:bg-blue-600"><a href="/cartera/recibir">Depositar</a></button>
+                        <button class="p-3 hover:text-blue-500"><a href="/cartera/vender">Retirar</a></button>
+                        <button class="p-3 hover:text-blue-500"><a href="/cartera/enviar">Enviar</a></button>
+                        <button class="p-3 hover:text-blue-500"><a href="/cartera/convertir">Convertir</a></button>
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row py-10 border-b-2 border-gray-600 space-y-10 md:space-y-0 px-2  md:items-center md:justify-between">
@@ -29,7 +29,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- </div> -->
 
                 <div class="rounded-md w-full" style="background-color: #181A20">
 
@@ -64,7 +63,7 @@
                                         <td class="px-5 py-5 border-b border-gray-600 text-sm">
                                             <div class="flex items-center ">
                                                 <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-full h-full rounded-full" src="{{URL('/img/BTC.png')}}" alt="" />
+                                                    <img class="w-full h-full rounded-full" src="{{URL('/img/EUR.png')}}" alt="" />
                                                 </div>
                                                 <div class="ml-3">
                                                     <p class="text-gray-300 whitespace-no-wrap font-bold">
@@ -89,10 +88,10 @@
                                         <td class="px-5 py-5 border-b border-gray-600  text-sm font-bold">
                                             <span class="relative inline-block px-3 py-1 font-semibold">
                                                 <span aria-hidden class=" rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2"><a href="/comprar">Comprar</a></button>
+                                                <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/comprar">Comprar</a></button>
 
                                                 <span aria-hidden class=" rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2"><a href="/cartera/vender">Retirar </a></button>
+                                                <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/retirar">Retirar </a></button>
                                             </span>
                                         </td>
 
@@ -159,13 +158,15 @@
                                         <td class="px-5 py-5 border-b border-gray-600  text-m font-bold">
                                             <span class="relative inline-block px-3 py-1 font-semibold">
                                                 <span aria-hidden class="rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2"><a href="/cartera/recibir">Depositar </a></button>
+                                                <button class="relative text-blue-500 hover:text-blue-600 px-2"><a href="/cartera/recibir">Depositar </a></button>
 
                                                 <span aria-hidden class="rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2"><a href="/cartera/vender">Retirar </a></button>
+                                                <button class="relative text-blue-500 hover:text-blue-600 px-2"><a href="/cartera/vender">Retirar </a></button>
 
                                                 <span aria-hidden class="rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2"><a href="/cartera/convertir">Convertir </a></button>
+                                                <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/cartera/convertir">Convertir </a></button>
+                                                <span aria-hidden class="rounded-full"></span>
+                                                <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/cartera/vender">Vender </a></button>
                                             </span>
                                         </td>
 

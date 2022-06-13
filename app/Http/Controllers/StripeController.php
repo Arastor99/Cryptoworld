@@ -57,6 +57,15 @@ class StripeController extends Controller
 
     public function stripePost1(Request $request)
     {
+
+        $efectivo = CarteraFiat::select('cantidad')
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->get();
+
+        if ($efectivo[0]->cantidad < $request->cantidad){
+            return redirect('/retirar')->withErrors('No tienes dinero para retirar');
+
+        }
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
 
@@ -66,18 +75,12 @@ class StripeController extends Controller
                 "description" => "Retirada de dinero"
         ]);
 
-        Session::flash('success', 'Payment successful!');
-
-
-        $efectivo = CarteraFiat::select('cantidad')
-                    ->where('user_id', '=', Auth::user()->id)
-                    ->get();
-
+        Session::flash('success', 'Retirada con exito');
 
 
         CarteraFiat::select('cantidad')
         ->where('user_id', '=', Auth::user()->id)
-        ->update(['cantidad','=', ($efectivo[0]->cantidad - $request->cantidad)]);
-        return back();
+        ->update(['cantidad' => ($efectivo[0]->cantidad - $request->cantidad)]);
+        return app('App\Http\Controllers\CarteraController')->visualizar();
     }
 }
