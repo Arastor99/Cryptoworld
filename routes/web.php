@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\URL;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//URL::forceScheme('https');
+URL::forceScheme('https');
 
 Route::get('/', Index::class);
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
