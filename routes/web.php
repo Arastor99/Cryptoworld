@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/mercado',[CarteraControll
 
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 Route::post('stripe1', [StripeController::class, 'stripePost1'])->name('stripe.post1');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('comprar', Comprar::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('checkout', [CarteraController::class, 'checkout']);
 

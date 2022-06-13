@@ -25,15 +25,26 @@ class StripeController extends Controller
      */
     public function stripePost(Request $request)
     {
+        $validated = $request->validate([
+            'abr' => 'required|max:255',
+            'cantidad' => 'required',
+            'stripeToken' => 'required',
+            'crypto_id' => 'required',
+        ]);
+
+        $cantidad = $validated['cantidad'];
+        $abr = $validated['abr'];
+        $stripeToken = $validated['stripeToken'];
+        $crypto_id = $validated['crypto_id'];
 
         $binance = new PreciosController();
-        $precio = $binance->precio($request->abr . 'EUR');
+        $precio = $binance->precio($abr . 'EUR');
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
 
-                "amount" => (float) $request->cantidad * 100,
+                "amount" => (float) $cantidad * 100,
                 "currency" => "eur",
-                "source" => $request->stripeToken,
+                "source" => $stripeToken,
                 "description" => "Esta pago es prueba"
         ]);
 
@@ -43,35 +54,43 @@ class StripeController extends Controller
         $cantidadActual = Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
-        ->where('direcciones.crypto_id', '=', $request->crypto_id)->get();
+        ->where('direcciones.crypto_id', '=', $crypto_id)->get();
 
-        $cantidad_cripto = (float) $request->cantidad / (float) $precio['price'];
+        $cantidad_cripto = (float) $cantidad / (float) $precio['price'];
         $total = (float) $cantidadActual[0]->cantidad + $cantidad_cripto;
         Cartera::select('carteras.cantidad')
         ->join('direcciones','carteras.direccion_id','=','direcciones.id')
         ->where('carteras.user_id','=', Auth::user()->id)
-        ->where('direcciones.crypto_id', '=', $request->crypto_id)
+        ->where('direcciones.crypto_id', '=', $crypto_id)
         ->update(['carteras.cantidad' => $total]);
         return app('App\Http\Controllers\CarteraController')->visualizar();
     }
 
     public function stripePost1(Request $request)
     {
+        $validated = $request->validate([
+            'cantidad' => 'required',
+            'stripeToken' => 'required',
+
+        ]);
+
+        $cantidad = $validated['cantidad'];
+        $stripeToken = $validated['stripeToken'];
 
         $efectivo = CarteraFiat::select('cantidad')
                     ->where('user_id', '=', Auth::user()->id)
                     ->get();
 
-        if ($efectivo[0]->cantidad < $request->cantidad){
+        if ($efectivo[0]->cantidad < $cantidad){
             return redirect('/retirar')->withErrors('No tienes dinero para retirar');
 
         }
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
 
-                "amount" => $request->cantidad * 100,
+                "amount" => $cantidad * 100,
                 "currency" => "usd",
-                "source" => $request->stripeToken,
+                "source" => $stripeToken,
                 "description" => "Retirada de dinero"
         ]);
 
@@ -80,7 +99,7 @@ class StripeController extends Controller
 
         CarteraFiat::select('cantidad')
         ->where('user_id', '=', Auth::user()->id)
-        ->update(['cantidad' => ($efectivo[0]->cantidad - $request->cantidad)]);
+        ->update(['cantidad' => ($efectivo[0]->cantidad - $cantidad)]);
         return app('App\Http\Controllers\CarteraController')->visualizar();
     }
 }
