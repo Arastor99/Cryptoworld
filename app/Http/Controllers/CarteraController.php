@@ -203,7 +203,7 @@ class CarteraController extends Controller
         Cartera::select('carteras.cantidad')
             ->join('direcciones', 'carteras.direccion_id', '=', 'direcciones.id')
             ->where('carteras.user_id', '=', Auth::user()->id)
-            ->where('direcciones.crypto_id', '=', $request->cryptoid2)
+            ->where('direcciones.crypto_id', '=', $cryptoid2)
             ->update(['carteras.cantidad' => $total2]);
 
         return redirect()->back()->with('success', 'Conversión realizada con exito');
@@ -331,15 +331,25 @@ class CarteraController extends Controller
 
     public function checkout(Request $request)
     {
-        $crypto = Crypto::select('abr')->where('id', '=', $request->cryptoid1)->get();
+
+        $validated = $request->validate([
+            'cantidad' => 'required|max:255',
+            'cryptoid1' => 'required',
+            'recibir' => 'required',
+        ]);
+
+        $cantidad = $validated['cantidad'];
+        $cryptoid1 = $validated['cryptoid1'];
+        $recibir = $validated['recibir'];
+        $crypto = Crypto::select('abr')->where('id', '=', $cryptoid1)->get();
         $binance = new PreciosController();
-        $total = $request->cantidad;
+        $total = $cantidad;
         return view('checkout', [
-            'cantidad' => $request->cantidad,
+            'cantidad' => $cantidad,
             'precio' => $total,
             'abr' => $crypto[0]->abr,
-            'crypto_id' => $request->cryptoid1,
-            'recibir' => $request->recibir,
+            'crypto_id' => $cryptoid1,
+            'recibir' => $recibir,
         ]);
     }
 
@@ -350,15 +360,21 @@ class CarteraController extends Controller
 
     public function retirada(Request $request)
     {
+        $validated = $request->validate([
+            'cantidad' => 'required|max:255',
+        ]);
+
+        $cantidad = $validated['cantidad'];
+
         $efectivo = CarteraFiat::select('cantidad')
                     ->where('user_id', '=', Auth::user()->id)
                     ->get();
-        if ($efectivo[0]->cantidad < $request->cantidad){
+        if ($efectivo[0]->cantidad < $cantidad){
             return redirect('/retirar')->withErrors('No tienes dinero para retirar');
 
         }
         return view('retirada', [
-            'cantidad' => $request->cantidad,
+            'cantidad' => $cantidad,
         ]);
     }
 }
