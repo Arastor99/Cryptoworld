@@ -48,7 +48,7 @@ class Vender extends Component
             $binance = new PreciosController();
 
             $this->precio = $binance->precio($this->nombre1 . 'EUR');
-            $this->total = $this->cantidad * $this->precio['price'];
+            $this->total = (float) $this->cantidad *  (float) $this->precio['price'];
 
         } else {
         }
