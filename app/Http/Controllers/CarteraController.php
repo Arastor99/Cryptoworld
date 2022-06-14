@@ -271,7 +271,7 @@ class CarteraController extends Controller
         $cryptoid = $validated['cryptoid'];
         $binance = new PreciosController();
 
-        if ($cantidad <= 0) {
+        if ($cantidad <= 0 || !is_numeric($cantidad)) {
             return redirect('/cartera/vender')->withErrors('No puedes vender 0 o menor que 0');
         }
 
