@@ -36,7 +36,7 @@
                     @endif
 
                     <button type="submit"
-                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2 text-xl">Comprar</button>
+                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg  px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2 text-2xl">Comprar</button>
                         <input type="hidden" name="cantidad" id="cantidad" value={{ $cantidad }}>
                         <input type="hidden" name="cryptoid1" id="cryptoid1" value={{ $cripto1 }}>
                         <input type="hidden" name="recibir" id="recibir" value={{ $total }}>

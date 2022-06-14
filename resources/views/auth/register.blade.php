@@ -7,8 +7,8 @@
         <div class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center" style="background-image: url(https://wallpaper.dog/large/20525282.jpg); background-position: center;">
             <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
             <div class="w-full px-24 z-10">
-                <h1 class="text-5xl font-bold text-left tracking-wide">Venga pa dentro</h1>
-                <p class="text-3xl my-4">y gasta tu dinero ya cojone</p>
+                <h1 class="text-5xl font-bold text-left tracking-wide">Registrate</h1>
+                <p class="text-3xl my-4">en cryptoworld</p>
             </div>
             <div class="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
                 <span>
@@ -36,7 +36,7 @@
                     <span class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">in</span>
                 </div>
                 <p class="text-gray-100">
-                    or use email your account
+                    O usa tu e-mail
                 </p>
                 <form method="POST" action="{{ route('register') }}" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
                     @csrf

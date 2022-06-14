@@ -35,7 +35,7 @@
                     @endif
 
                     <button type="submit"
-                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2">Convertir</button>
+                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-2xl px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2">Vender</button>
                     <input type="hidden" name="cryptoid" id="cryptoid" value={{ $cripto1 }}>
                     <input type="hidden" name="cantidad" id="cantidad" value={{ $cantidad }}>
                 </form>
