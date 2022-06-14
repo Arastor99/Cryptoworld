@@ -150,10 +150,9 @@
   }
     </script>
   </div>
-  <!-- TradingView Widget END -->
                     </div>
 
-                    <div class="flex-1 ">
+                    <div class="flex-1">
                         <div class="cryptohopper-web-widget pt-10" data-id="4" data-coins="bitcoin,ethereum,bnb,cardano" data-theme="dark" data-realtime="on" data-currency="EUR"></div>
                             </div>
                         </div>

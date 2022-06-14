@@ -161,13 +161,10 @@
                                                 <button class="relative text-blue-500 hover:text-blue-600 px-2"><a href="/cartera/recibir">Depositar </a></button>
 
                                                 <span aria-hidden class="rounded-full"></span>
-                                                <button class="relative text-blue-500 hover:text-blue-600 px-2"><a href="/cartera/vender">Retirar </a></button>
+                                                <button class="relative text-blue-500 hover:text-blue-600 px-2"><a href="/cartera/vender">Vender </a></button>
 
                                                 <span aria-hidden class="rounded-full"></span>
                                                 <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/cartera/convertir">Convertir </a></button>
-                                                <span aria-hidden class="rounded-full"></span>
-                                                <button class="relative text-blue-500 px-2 hover:text-blue-600"><a href="/cartera/vender">Vender </a></button>
-                                            </span>
                                         </td>
 
                                     </tr>
@@ -183,7 +180,6 @@
 
     </div>
     <div>
-        <!-- aqui va lo demás -->
     </div>
     </div>
 

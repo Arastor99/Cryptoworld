@@ -107,7 +107,6 @@ class CarteraController extends Controller
         if ($cryptoid1->isEmpty()) {
 
             return redirect('/cartera/enviar')->withErrors('La direccion introducida no pertenece a nadie');
-
         } else if ($cryptoid1[0]->crypto_id != $cryptoid) {
             return redirect('/cartera/enviar')->withErrors('La direccion introducida no pertenece a la moneda que esta intentando enviar');
         }
@@ -262,7 +261,6 @@ class CarteraController extends Controller
 
     public function vender(Request $request)
     {
-        //falta hacer comprobaciones antes de realizar cualquier operacion.
 
         $validated = $request->validate([
             'cantidad' => 'required|max:255',
@@ -272,6 +270,10 @@ class CarteraController extends Controller
         $cantidad = $validated['cantidad'];
         $cryptoid = $validated['cryptoid'];
         $binance = new PreciosController();
+
+        if ($cantidad <= 0) {
+            return redirect('/cartera/vender')->withErrors('No puedes vender 0 o menor que 0');
+        }
 
         $abr = Crypto::select('abr')
             ->where('id', '=', $cryptoid)
@@ -367,11 +369,10 @@ class CarteraController extends Controller
         $cantidad = $validated['cantidad'];
 
         $efectivo = CarteraFiat::select('cantidad')
-                    ->where('user_id', '=', Auth::user()->id)
-                    ->get();
-        if ($efectivo[0]->cantidad < $cantidad){
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
+        if ($efectivo[0]->cantidad < $cantidad) {
             return redirect('/retirar')->withErrors('No tienes dinero para retirar');
-
         }
         return view('retirada', [
             'cantidad' => $cantidad,

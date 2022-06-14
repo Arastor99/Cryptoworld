@@ -20,7 +20,7 @@
                     @endif
 
                     <button type="submit"
-                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2">Retirar</button>
+                        class="text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-2xl px-5 py-2.5 text-center col-span-2 mt-12 h-20 grow-0 col-start-2">Retirar</button>
                 </form>
                 <div>
         </div>
