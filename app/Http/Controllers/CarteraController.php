@@ -343,6 +343,9 @@ class CarteraController extends Controller
         $cantidad = $validated['cantidad'];
         $cryptoid1 = $validated['cryptoid1'];
         $recibir = $validated['recibir'];
+        if($cantidad <= 0){
+            return redirect('/comprar')->withErrors('Por favor inserte una cantidad valida');
+        }
         $crypto = Crypto::select('abr')->where('id', '=', $cryptoid1)->get();
         $binance = new PreciosController();
         $total = $cantidad;
