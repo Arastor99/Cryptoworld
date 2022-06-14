@@ -343,7 +343,7 @@ class CarteraController extends Controller
         $cantidad = $validated['cantidad'];
         $cryptoid1 = $validated['cryptoid1'];
         $recibir = $validated['recibir'];
-        if($cantidad <= 0){
+        if($cantidad <= 0 || !is_numeric($cantidad)){
             return redirect('/comprar')->withErrors('Por favor inserte una cantidad valida');
         }
         $crypto = Crypto::select('abr')->where('id', '=', $cryptoid1)->get();
@@ -370,7 +370,7 @@ class CarteraController extends Controller
         ]);
 
         $cantidad = $validated['cantidad'];
-        if($cantidad <= 0){
+        if($cantidad <= 0 || !is_numeric($cantidad)){
             return redirect('/retirar')->withErrors('Por favor inserte una cantidad valida');
         }
         $efectivo = CarteraFiat::select('cantidad')
