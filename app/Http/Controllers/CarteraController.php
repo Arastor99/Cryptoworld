@@ -370,7 +370,9 @@ class CarteraController extends Controller
         ]);
 
         $cantidad = $validated['cantidad'];
-
+        if($cantidad <= 0){
+            return redirect('/retirar')->withErrors('Por favor inserte una cantidad valida');
+        }
         $efectivo = CarteraFiat::select('cantidad')
             ->where('user_id', '=', Auth::user()->id)
             ->get();
